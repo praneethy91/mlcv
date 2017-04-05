@@ -23,9 +23,11 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+
 flowers/
 .idea/
 *.ckpt
+log/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
