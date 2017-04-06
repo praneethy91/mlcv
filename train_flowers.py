@@ -21,7 +21,7 @@ checkpoint_file = './inception_resnet_v2_2016_08_30.ckpt'
 image_size = 299
 
 #State the number of classes to predict:
-num_classes = 5
+num_classes = 12
 
 #State the labels file and read it
 labels_file = './hands/labels.txt'
