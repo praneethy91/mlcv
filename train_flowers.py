@@ -9,7 +9,7 @@ slim = tf.contrib.slim
 
 #================ DATASET INFORMATION ======================
 #State dataset directory where the tfrecord files are located
-dataset_dir = 'flowers'
+dataset_dir = 'hands'
 
 #State where your log file is at. If it doesn't exist, create it.
 log_dir = './log'
@@ -24,7 +24,7 @@ image_size = 299
 num_classes = 5
 
 #State the labels file and read it
-labels_file = './flowers/labels.txt'
+labels_file = './hands/labels.txt'
 labels = open(labels_file, 'r')
 
 #Create a dictionary to refer each label to their string name
@@ -35,7 +35,7 @@ for line in labels:
     labels_to_name[int(label)] = string_name
 
 #Create the file pattern of your TFRecord files so that it could be recognized later on
-file_pattern = 'flowers_%s_*.tfrecord'
+file_pattern = 'hands_%s_*.tfrecord'
 
 #Create a dictionary that will help people understand your dataset better. This is required by the Dataset class later.
 items_to_descriptions = {
@@ -82,7 +82,7 @@ def get_split(split_name, dataset_dir, file_pattern=file_pattern):
 
     #Count the total number of examples in all of these shard
     num_samples = 0
-    file_pattern_for_counting = 'flowers_' + split_name
+    file_pattern_for_counting = 'hands_' + split_name
     tfrecords_to_count = [os.path.join(dataset_dir, file) for file in os.listdir(dataset_dir) if file.startswith(file_pattern_for_counting)]
     for tfrecord_file in tfrecords_to_count:
         for record in tf.python_io.tf_record_iterator(tfrecord_file):

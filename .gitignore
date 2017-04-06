@@ -28,6 +28,7 @@ flowers/
 .idea/
 *.ckpt
 log/
+hands/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

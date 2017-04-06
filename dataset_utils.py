@@ -102,17 +102,17 @@ class ImageReader(object):
   """Helper class that provides TensorFlow image coding utilities."""
 
   def __init__(self):
-    # Initializes function that decodes RGB JPEG data.
-    self._decode_jpeg_data = tf.placeholder(dtype=tf.string)
-    self._decode_jpeg = tf.image.decode_jpeg(self._decode_jpeg_data, channels=3)
+    # Initializes function that decodes RGB png data.
+    self._decode_png_data = tf.placeholder(dtype=tf.string)
+    self._decode_png = tf.image.decode_png(self._decode_png_data, channels=3)
 
   def read_image_dims(self, sess, image_data):
-    image = self.decode_jpeg(sess, image_data)
+    image = self.decode_png(sess, image_data)
     return image.shape[0], image.shape[1]
 
-  def decode_jpeg(self, sess, image_data):
-    image = sess.run(self._decode_jpeg,
-                     feed_dict={self._decode_jpeg_data: image_data})
+  def decode_png(self, sess, image_data):
+    image = sess.run(self._decode_png,
+                     feed_dict={self._decode_png_data: image_data})
     assert len(image.shape) == 3
     assert image.shape[2] == 3
     return image
@@ -123,7 +123,7 @@ def _get_filenames_and_classes(dataset_dir):
 
   Args:
     dataset_dir: A directory containing a set of subdirectories representing
-      class names. Each subdirectory should contain PNG or JPG encoded images.
+      class names. Each subdirectory should contain PNG or png encoded images.
 
   Returns:
     A list of image file paths, relative to `dataset_dir` and the list of
@@ -165,7 +165,7 @@ def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, tfr
 
   Args:
     split_name: The name of the dataset, either 'train' or 'validation'.
-    filenames: A list of absolute paths to png or jpg images.
+    filenames: A list of absolute paths to png or png images.
     class_names_to_ids: A dictionary from class names (strings) to ids
       (integers).
     dataset_dir: The directory where the converted datasets are stored.
@@ -199,7 +199,7 @@ def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, tfr
             class_id = class_names_to_ids[class_name]
 
             example = image_to_tfexample(
-                image_data, b'jpg', height, width, class_id)
+                image_data, b'png', height, width, class_id)
             tfrecord_writer.write(example.SerializeToString())
 
   sys.stdout.write('\n')
