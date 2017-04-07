@@ -17,7 +17,7 @@ log_dir = './log'
 log_eval = './log_eval_test'
 
 #State the dataset directory where the validation set is found
-dataset_dir = '.'
+dataset_dir = 'hands'
 
 #State the batch_size to evaluate each time, which can be a lot more than the training batch
 batch_size = 36
@@ -41,7 +41,7 @@ def run():
         images, raw_images, labels = load_batch(dataset, batch_size = batch_size, is_training = False)
 
         #Create some information about the training steps
-        num_batches_per_epoch = dataset.num_samples / batch_size
+        num_batches_per_epoch = int(dataset.num_samples / batch_size)
         num_steps_per_epoch = num_batches_per_epoch
 
         #Now create the inference model but set is_training=False
@@ -88,7 +88,7 @@ def run():
 
         #Now we are ready to run in one session
         with sv.managed_session() as sess:
-            for step in xrange(num_steps_per_epoch * num_epochs):
+            for step in range(num_steps_per_epoch * num_epochs):
                 sess.run(sv.global_step)
                 #print vital information every start of the epoch as always
                 if step % num_batches_per_epoch == 0:
