@@ -40,19 +40,13 @@ def main():
     #==============================================================END OF CHECKS===================================================================
 
     #Get a list of photo_filenames like ['123.jpg', '456.jpg'...] and a list of sorted class names from parsing the subdirectories.
-    photo_filenames, class_names = _get_filenames_and_classes(FLAGS.dataset_dir)
+    photo__train_filenames, photo__val_filenames, class_names = _get_filenames_and_classes(FLAGS.dataset_dir)
 
     #Refer each of the class name to a specific integer number for predictions later
     class_names_to_ids = dict(zip(class_names, range(len(class_names))))
 
-    #Find the number of validation examples we need
-    num_validation = int(FLAGS.validation_size * len(photo_filenames))
-
-    # Divide the training datasets into train and test:
-    random.seed(FLAGS.random_seed)
-    random.shuffle(photo_filenames)
-    training_filenames = photo_filenames[num_validation:]
-    validation_filenames = photo_filenames[:num_validation]
+    training_filenames = photo__train_filenames
+    validation_filenames = photo__val_filenames
 
     # First, convert the training and validation sets.
     _convert_dataset('train', training_filenames, class_names_to_ids,

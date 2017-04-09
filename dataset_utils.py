@@ -135,23 +135,36 @@ def _get_filenames_and_classes(dataset_dir):
   # for name in os.listdir(dataset_dir):
   # 	if os.path.isdir(name):
   # 		dataset_main_folder_list.append(name)
-  dataset_main_folder_list = [name for name in os.listdir(dataset_dir) if os.path.isdir(os.path.join(dataset_dir,name))]
-  dataset_root = os.path.join(dataset_dir, dataset_main_folder_list[0])
-  directories = []
+  dataset_train_root = os.path.join(dataset_dir, 'train')
+  dataset_val_root = os.path.join(dataset_dir, 'val')
+
+  directories_train = []
   class_names = []
-  for filename in os.listdir(dataset_root):
-    path = os.path.join(dataset_root, filename)
+  for filename in os.listdir(dataset_train_root):
+    path = os.path.join(dataset_train_root, filename)
     if os.path.isdir(path):
-      directories.append(path)
+      directories_train.append(path)
       class_names.append(filename)
 
-  photo_filenames = []
-  for directory in directories:
+  directories_val = []
+  for filename in os.listdir(dataset_val_root):
+    path = os.path.join(dataset_val_root, filename)
+    if os.path.isdir(path):
+      directories_val.append(path)
+
+  photo_train_filenames = []
+  for directory in directories_train:
     for filename in os.listdir(directory):
       path = os.path.join(directory, filename)
-      photo_filenames.append(path)
+      photo_train_filenames.append(path)
 
-  return photo_filenames, sorted(class_names)
+  photo_val_filenames = []
+  for directory in directories_val:
+    for filename in os.listdir(directory):
+      path = os.path.join(directory, filename)
+      photo_val_filenames.append(path)
+
+  return photo_train_filenames, photo_val_filenames, sorted(class_names)
 
 
 def _get_dataset_filename(dataset_dir, split_name, shard_id, tfrecord_filename, _NUM_SHARDS):
