@@ -29,6 +29,7 @@ flowers/
 *.ckpt
 log/
 hands/
+log_eval_test/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
