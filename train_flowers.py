@@ -18,7 +18,7 @@ log_dir = './log'
 checkpoint_file = './inception_resnet_v2_2016_08_30.ckpt'
 
 #State the image size you're resizing your images to. We will use the default inception size of 299.
-image_size = 299
+image_size = 224
 
 #State the number of classes to predict:
 num_classes = 12
@@ -144,8 +144,8 @@ def load_batch(dataset, batch_size, height=image_size, width=image_size, is_trai
     #First create the data_provider object
     data_provider = slim.dataset_data_provider.DatasetDataProvider(
         dataset,
-        common_queue_capacity = 24 + 3 * batch_size,
-        common_queue_min = 24)
+        common_queue_capacity = 3000 + 3 * batch_size,
+        common_queue_min = 3000)
 
     #Obtain the raw image using the get method
     raw_image, label = data_provider.get(['image', 'label'])
@@ -266,12 +266,13 @@ def run():
                     logging.info('Current Learning Rate: %s', learning_rate_value)
                     logging.info('Current Streaming Accuracy: %s', accuracy_value)
 
-                    # optionally, print your logits and predictions for a sanity check that things are going fine.
-                    logits_value, probabilities_value, predictions_value, labels_value = sess.run([logits, probabilities, predictions, labels])
-                    print('logits: \n', logits_value)
-                    print('Probabilities: \n', probabilities_value)
-                    print('predictions: \n', predictions_value)
-                    print('Labels:\n', labels_value)
+                # optionally, print your logits and predictions for a sanity check that things are going fine.
+                predictions_value, labels_value = sess.run([predictions, labels])
+                #print('logits: \n', logits_value)
+                #print('Probabilities: \n', probabilities_value)
+
+                print('predictions: \n', predictions_value)
+                print('Labels:\n', labels_value)
 
                 #Log the summaries every 10 step.
                 if step % 10 == 0:
