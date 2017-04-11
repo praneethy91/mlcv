@@ -46,13 +46,13 @@ items_to_descriptions = {
 
 #================= TRAINING INFORMATION ==================
 #State the number of epochs to train
-num_epochs = 70
+num_epochs = 50
 
 #State your batch size
-batch_size = 10
+batch_size = 32
 
 #Learning rate information and configuration (Up to you to experiment)
-initial_learning_rate = 0.0005
+initial_learning_rate = 0.0002
 learning_rate_decay_factor = 1.0
 num_epochs_before_decay = 2
 
@@ -267,12 +267,12 @@ def run():
                     logging.info('Current Streaming Accuracy: %s', accuracy_value)
 
                 # optionally, print your logits and predictions for a sanity check that things are going fine.
-                predictions_value, labels_value = sess.run([predictions, labels])
+                #predictions_value, labels_value = sess.run([predictions, labels])
                 #print('logits: \n', logits_value)
                 #print('Probabilities: \n', probabilities_value)
 
-                print('predictions: \n', predictions_value)
-                print('Labels:\n', labels_value)
+                #print('predictions: \n', predictions_value)
+                #print('Labels:\n', labels_value)
 
                 #Log the summaries every 10 step.
                 if step % 10 == 0:
