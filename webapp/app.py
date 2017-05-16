@@ -3,7 +3,7 @@
 import os
 from flask import Flask, Response, request, abort, render_template, render_template_string, send_from_directory
 from PIL import Image
-import StringIO
+import io
 
 app = Flask(__name__)
 
@@ -23,9 +23,9 @@ def image(filename):
     try:
         im = Image.open(filename)
         im.thumbnail((w, h), Image.ANTIALIAS)
-        io = StringIO.StringIO()
-        im.save(io, format='PNG')
-        return Response(io.getvalue(), mimetype='image/png')
+        ios = io.StringIO()
+        im.save(ios, format='PNG')
+        return Response(ios.getvalue(), mimetype='image/png')
 
     except IOError:
         abort(404)
