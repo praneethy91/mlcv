@@ -3,46 +3,39 @@
  
 <head>
     <title>Classifier</title>
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
  
 <body>
- 
     <div class="container">
         <div class="header">
             <h3 class="text-muted">Classifier</h3>
+            <hr style="width: 100%; color: black; height: 1px; background-color:black;">
         </div>
  
         <div class="row marketing">
-            <div class="col-lg-12">
+            <div class="col-md-6">
                 {% for image in images %}
-                    <img src="{{ image.src }}" />
+                    <img src="{{ image.src }}" style="width: {{ image.width }}px; height: {{ image.height }}px"/>
                     <br/>
                 {% endfor %}
             </div>
-        </div>
-
-
-        <div class="row marketing">
-            <div class="col-lg-12">
+            <div class="col-md-6">
                 {% for image in images %}
                     <!--
                     <a class="image" href="{{ image.src }}" style="width: {{ image.width }}px; height: {{ image.height }}px">
                         <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
                         data-src="{{ image.src }}?w={{ image.width }}&amp;h={{ image.height }}" width="{{ image.width }}" height="{{ image.height }}" />
                     </a>-->
-                    <img src="{{ image.src }}" />
+                    <img src="{{ image.src }}" style="width: {{ image.width }}px; height: {{ image.height }}px"/>
                     <br/>
                 {% endfor %}
             </div>
         </div>
- 
-        <footer class="footer">
-            <p>Spring, 2017 | NYU</p>
-        </footer>
- 
     </div>
 </body>
- 
 </html>

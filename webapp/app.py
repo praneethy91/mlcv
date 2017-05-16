@@ -7,8 +7,8 @@ import io
 
 app = Flask(__name__)
 
-WIDTH = 1000
-HEIGHT = 800
+WIDTH = 480
+HEIGHT = 270
 
 TEMPLATE = 'index.html'
 
