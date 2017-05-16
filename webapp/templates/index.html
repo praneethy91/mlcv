@@ -25,7 +25,7 @@
                 {% endfor %}
             </div>
             <div class="col-md-6">
-                {% for image in images %}
+                {% for image in images2 %}
                     <!--
                     <a class="image" href="{{ image.src }}" style="width: {{ image.width }}px; height: {{ image.height }}px">
                         <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
@@ -34,6 +34,21 @@
                     <img src="{{ image.src }}" style="width: {{ image.width }}px; height: {{ image.height }}px"/>
                     <br/>
                 {% endfor %}
+            </div>
+        </div>
+        <div class="row marketing">
+            <br/>
+            <div class="col-md-6">
+                <form method=post enctype=multipart/form-data>
+                  <p><input type=file name=file>
+                  <br/>
+                  <input type = "submit"/>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form enctype=multipart/form-data>
+                  <p><input onclick="localize()" type=submit value=Localize>
+                </form>
             </div>
         </div>
     </div>
