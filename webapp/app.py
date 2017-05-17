@@ -70,13 +70,13 @@ def upload_file():
         images.append({
             'width': int(width),
             'height': int(height),
-            'src': f.filename
+            'src': os.path.join(app.config['UPLOAD_FOLDER'], filename)
         })
 
         images2.append({
             'width': int(width),
             'height': int(height),
-            'src': f.filename
+            'src': os.path.join(app.config['UPLOAD_FOLDER'], filename)
         })
         images.append(f.filename)
         images2.append(f.filename)
