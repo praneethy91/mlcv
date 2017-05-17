@@ -78,7 +78,6 @@ def run():
 
             return accuracy_value
 
-
         #Define some scalar quantities to monitor
         tf.summary.scalar('Validation_Accuracy', accuracy)
         my_summary_op = tf.summary.merge_all()
