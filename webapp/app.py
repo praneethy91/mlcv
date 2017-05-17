@@ -3,6 +3,7 @@
 import os
 from flask import Flask, Response, request, abort, render_template, render_template_string, send_from_directory
 from PIL import Image
+from werkzeug import secure_filename
 import io
 
 app = Flask(__name__)
@@ -10,7 +11,11 @@ app = Flask(__name__)
 WIDTH = 480
 HEIGHT = 270
 
+
 TEMPLATE = 'index.html'
+UPLOAD_FOLDER = 'uploads'
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/<path:filename>')
 def image(filename):
@@ -35,28 +40,54 @@ def image(filename):
 @app.route('/')
 def index():
     images = []
-    for root, dirs, files in os.walk('.'):
-        for filename in [os.path.join(root, name) for name in files]:
-            if not filename.endswith('.png'):
-                continue
-            im = Image.open(filename)
-            w, h = im.size
-            aspect = 1.0*w/h
-            if aspect > 1.0*WIDTH/HEIGHT:
-                width = min(w, WIDTH)
-                height = width/aspect
-            else:
-                height = min(h, HEIGHT)
-                width = height*aspect
-            images.append({
-                'width': int(width),
-                'height': int(height),
-                'src': filename
-            })
 
     return render_template(TEMPLATE, **{
         'images': images
     })
+
+@app.route('/', methods = ['POST'])
+def upload_file():
+    images = []
+    images2 = []
+
+    if request.method == 'POST':
+        f = request.files['file']
+        filename = secure_filename(f.filename)
+
+        f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        im = Image.open(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        w, h = im.size
+
+        aspect = 1.0*w/h
+
+        if aspect > 1.0*WIDTH/HEIGHT:
+            width = min(w, WIDTH)
+            height = width/aspect
+        else:
+            height = min(h, HEIGHT)
+            width = height*aspect
+
+        images.append({
+            'width': int(width),
+            'height': int(height),
+            'src': f.filename
+        })
+
+        images2.append({
+            'width': int(width),
+            'height': int(height),
+            'src': f.filename
+        })
+        images.append(f.filename)
+        images2.append(f.filename)
+
+        return render_template(TEMPLATE, **{
+            'images': images,
+            'images2': images2
+        })
+
+def localize():
+    images2 = []
 
 if __name__ == '__main__':
     app.run(debug=True, host='::')
