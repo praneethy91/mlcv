@@ -77,26 +77,44 @@ def localize(img_path, model, bbox_util, index):
             ymax = int(round(top_ymax[i] * img.shape[0]))
             xmid = int(round((xmin+xmax)/2))
             ymid = int(round((ymin+ymax)/2))
-            xmin = xmid-112
-            xmax = xmid+112
-            ymin = ymid-112
-            ymax = ymid+112
+            new_xmin = xmid-112;
+            new_xmax = xmid+112;
+            new_ymin = ymid-112;
+            new_ymax = ymid+112;
+        
+            #if xmax-xmin==223:
+            #   xmax+=1
+            #if ymax-ymin==223:
+            #   ymax+=1
+
+            if new_xmin<0:
+                new_xmax+=(-new_xmin)
+                new_xmin=0
+            if new_xmax>640:
+                new_xmin-=(new_xmax-639)
+                new_xmax=639    
+            if new_ymax>360:
+                new_ymin-=(new_ymax-359)
+                new_ymax = 359
+            if new_ymin<0:
+                new_ymax+=(-new_ymin)
+                new_ymin=0
 
             if xmin<0:
                 xmax+=(-xmin)
                 xmin=0
             if xmax>640:
-                xmin-=(xmax-640)
-                xmax=639
+                xmin-=(xmax-639)
+                xmax=639    
             if ymax>360:
-                ymin-=(ymax-360)
+                ymin-=(ymax-359)
                 ymax = 359
             if ymin<0:
                 ymax+=(-ymin)
                 ymin=0
             if not highestConfidenceStoredROI:
                 global roi
-                roi = img[ymin:ymax, xmin:xmax]
+                roi = img[new_ymin:new_ymax, new_xmin:new_xmax]
                 if ymax - ymin == 223 and xmax - xmin == 223:
                     roi = np.pad(roi, ((0, 1), (0, 1), (0, 0)), 'edge')
                 print(roi.shape)
