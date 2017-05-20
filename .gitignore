@@ -30,6 +30,10 @@ flowers/
 log/
 hands/
 log_eval_test/
+prior_boxes_ssd300.pkl
+webapp/output
+webapp/uploads
+*.hdf5
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
